@@ -5,21 +5,28 @@ import pickle
 import os
 
 class Servidor():
-	def __init__(self, host=socket.gethostname(), port=59989):
+	#pedimos el nuevo puerto
+	print("Que puerto quieres utilizar?")
+	def __init__(self, host=socket.gethostname(), port=input()):
 		self.clientes = []
 		self.sock = socket.socket()
 		self.sock.bind((str(host), int(port)))
 		self.sock.listen(20)
 		self.sock.setblocking(False)
 
+		print("Su IP actual es: " + socket.gethostbyname(host))
 		aceptar = threading.Thread(target=self.aceptarC)
 		procesar = threading.Thread(target=self.procesarC)
 		
+		print("DAEMON listo para aceptar conexiones")
 		aceptar.daemon = True
 		aceptar.start()
 
+		print("DAEMON listo para procesar")
 		procesar.daemon = True
 		procesar.start()
+
+
 
 		while True:
 			msg = input('SALIR = Q\n')
@@ -28,6 +35,8 @@ class Servidor():
 				self.sock.close()
 				sys.exit()
 			else:
+				#numero de clientes conectados
+				#print("El número de clientes conectados: "+ socket.)
 				pass
 
 	def broadcast(self, msg, cliente):

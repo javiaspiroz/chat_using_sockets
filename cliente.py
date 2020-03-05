@@ -5,8 +5,7 @@ import pickle
 import os
 
 class Cliente():
-
-	def __init__(self, host=socket.gethostname(), port=59989):
+	def __init__(self, host=input("Introduzca la IP del servidor"), port=input("Introduzca el puerto del servidor")):
 		self.sock = socket.socket()
 		self.sock.connect((str(host), int(port)))
 		hilo_recv_mensaje = threading.Thread(target=self.recibir)
@@ -37,5 +36,3 @@ class Cliente():
 		self.sock.send(pickle.dumps(msg))
 
 c = Cliente()
-
-		
